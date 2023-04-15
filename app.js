@@ -10,7 +10,7 @@ var camerasRouter = require('./routes/cameras');
 var boardRouter = require('./routes/board');
 var selectorRouter = require('./routes/selector');
 var cameras = require("./models/cameras");
-
+var resourceRouter = require('./routes/resource');
 
 
 var app = express();
@@ -30,6 +30,7 @@ app.use('/users', usersRouter);
 app.use('/cameras', camerasRouter);
 app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource', resourceRouter);
 
 require('dotenv').config();
 const connectionString =
