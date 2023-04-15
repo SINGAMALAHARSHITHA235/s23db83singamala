@@ -9,6 +9,9 @@ var usersRouter = require('./routes/users');
 var camerasRouter = require('./routes/cameras');
 var boardRouter = require('./routes/board');
 var selectorRouter = require('./routes/selector');
+var cameras = require("./models/cameras");
+
+
 
 var app = express();
 
@@ -28,6 +31,13 @@ app.use('/cameras', camerasRouter);
 app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
 
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,
+useUnifiedTopology: true});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -44,5 +54,40 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+// We can seed the collection if needed on server start
+async function recreateDB(){
+// Delete everything
+await cameras.deleteMany();
+let instance1 = new
+cameras({cameras_type:"DSLR",cameras_resolution:"1080p",cameras_price:1000});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+let instance2 = new
+cameras({cameras_type:"Action Camera",cameras_resolution:"4k",cameras_price:2000});
+instance2.save().then(doc=>{
+console.log("Second object saved")}
+).catch(err=>{
+console.error(err)
+});
+let instance3 = new
+cameras({cameras_type:"360 Degree Cameras",cameras_resolution:"8k",cameras_price:3000});
+instance3.save().then(doc=>{
+console.log("Third object saved")}
+).catch(err=>{
+console.error(err)
+});
+}
+let reseed = true;
+if (reseed) {recreateDB();}
 
 module.exports = app;
