@@ -2,13 +2,12 @@ extends layout
 
 block content
   h1= title
-  - var cameras=[{cameras_type:"DSLR",cameras_resolution:"1080p",cameras_price:1000},{cameras_type:"Action Camera",cameras_resolution:"4k",cameras_price:2000},{cameras_type:"360 Degree Cameras",cameras_resolution:"8k",cameras_price:3000}]
-  div(class="container-fluid")
+   - let items = result;
   div(class="row")
-   each h,index  in cameras
-    div(class="col-sm-2" onclick =`buy(${index})`) #{h.cameras_type}, #{h.cameras_resolution}, #{h.cameras_price}
-    script.
-        function buy(a)
-        {
-            alert(`You purchased Item ${a+1}`)
-        }
+    each value, index in items
+      div(class="col-sm-2", onclick=`buy(${index})`) #{value.cameras_type}, #{value.cameras_resolution}, #{value.cameras_price}
+  script.
+    function buy(param)
+    {
+        console.log(param);
+    }

@@ -26,3 +26,15 @@ res.send('NOT IMPLEMENTED: cameras delete DELETE ' + req.params.id);
 exports.cameras_update_put = function(req, res) {
 res.send('NOT IMPLEMENTED: cameras update PUT' + req.params.id);
 };
+// VIEWS
+// Handle a show all view
+exports.cameras_view_all_Page = async function(req, res) {
+    try{
+        cameras = await cameras.find();
+    res.render('cameras', { title: 'cameras Search Result', result: cameras });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
