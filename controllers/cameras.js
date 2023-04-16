@@ -15,8 +15,21 @@ exports.cameras_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: cameras detail: ' + req.params.id);
 };
 // Handle cameras create on POST.
-exports.cameras_create_post = function(req, res) {
-res.send('NOT IMPLEMENTED: cameras create POST');
+exports.cameras_create_post = async function(req, res) {
+    console.log(req.body)
+    var document = new cameras();
+    
+    document.cameras_type = req.body.cameras_type;
+    document.cameras_resolution = req.body.cameras_resolution;;
+    document.cameras_price = req.body.cameras_price;
+    try{
+    let result = await document.save();
+    res.send(result);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    } 
 };
 // Handle cameras delete form on DELETE.
 exports.cameras_delete = function(req, res) {
