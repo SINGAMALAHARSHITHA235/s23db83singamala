@@ -2,18 +2,15 @@ var cameras = require('../models/cameras');
 // List of all cameras
 exports.cameras_list = async function(req, res) {
     try{
-        cameras = await cameras.find();
-    res.send(cameras);
+        result = await cameras.find();
+    res.send(result);
     }
     catch(err){
     res.status(500);
     res.send(`{"error": ${err}}`);
     }
     };
-// for a specific cameras.
-exports.cameras_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: cameras detail: ' + req.params.id);
-};
+
 // Handle cameras create on POST.
 exports.cameras_create_post = async function(req, res) {
     console.log(req.body)
@@ -51,3 +48,15 @@ exports.cameras_view_all_Page = async function(req, res) {
     res.send(`{"error": ${err}}`);
     }
     };
+    // for a specific Costume.
+    exports.cameras_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await cameras.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    

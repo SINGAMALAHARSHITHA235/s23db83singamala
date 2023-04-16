@@ -21,5 +21,8 @@ const secured = (req, res, next) => {
 } 
 
 /* GET cameras */
-router.get('/',cameras_controllers.cameras_view_all_Page );
+router.get('/',secured,cameras_controllers.cameras_view_all_Page );
+
+// GET request for one costume.
+//router.get('/cameras/:id', cameras_controllers.cameras_detail);
 module.exports = router;
