@@ -2,12 +2,12 @@ extends layout
 
 block content
   h1= title
-   - let items = result;
+  - let items = result;
   div(class="row")
-    each value, index in items
+    each value,index in items
       div(class="col-sm-2", onclick=`buy(${index})`) #{value.cameras_type}, #{value.cameras_resolution}, #{value.cameras_price}
   script.
     function buy(param)
     {
-        console.log(param);
+      console.log(param);
     }

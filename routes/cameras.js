@@ -12,17 +12,14 @@ var express = require('express');
 const cameras_controllers= require('../controllers/cameras');
 var router = express.Router();
 
-const secured = (req, res, next) => { 
-  if (req.user){ 
-    return next(); 
-  } 
-  req.session.returnTo = req.originalUrl; 
-  res.redirect("/login"); 
-} 
+
 
 /* GET cameras */
-router.get('/',secured,cameras_controllers.cameras_view_all_Page );
+router.get('/',cameras_controllers.cameras_view_all_Page );
+
+/* GET detail cameras page */ 
+router.get('/detail',cameras_controllers.cameras_view_one_Page); 
 
 // GET request for one costume.
-//router.get('/cameras/:id', cameras_controllers.cameras_detail);
+router.get('/cameras/:id', cameras_controllers.cameras_detail);
 module.exports = router;

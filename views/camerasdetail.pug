@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  - let camerasid = toShow._id
+  - let cameras_type = toShow.cameras_type
+  - let cameras_resolution = toShow.cameras_resolution
+  - let cameras_price = toShow.cameras_price
+  div
+    div.row
+      div(class='camerasAttr mr-3') cameras ID is:
+      div #{camerasid}
+    div.row
+      div(class='camerasAttr mr-3') cameras Type is:
+      div #{cameras_type}
+    div.row
+      div(class='camerasAttr mr-3') cameras Resolution is:
+      div #{cameras_resolution}
+    div.row
+      div(class='camerasAttr mr-3') cameras Price is:
+      div #{cameras_price}
