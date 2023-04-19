@@ -1,0 +1,52 @@
+extends layout 
+block content 
+  h1= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let camerasid = toShow._id
+    - let cameras_type = toShow.cameras_type
+    - let cameras_resolution = toShow.cameras_resolution
+    - let cameras_price = toShow.cameras_price
+    - let actionid = "/resource/cameras/" + camerasid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='camerasAttr mr-3') cameras ID is: 
+        div #{camerasid} 
+      div.row 
+        div(class='camerasAttr mr-3') cameras type is: 
+        div #{cameras_type} 
+      div.row 
+        div(class='camerasAttr mr-3') cameras resolution is: 
+        div #{cameras_resolution} 
+      div.row 
+        div(class='camerasAttr mr-3') cameras price is: 
+        div #{cameras_price} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the desiRestaruant collection 
+      window.location.href='/cameras' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'      // Dont need a body for the delete 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/cameras' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    } 

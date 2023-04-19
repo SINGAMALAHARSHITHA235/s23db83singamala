@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1= title
+  - let camerasid = toShow._id
+  - let cameras_type = toShow.cameras_type
+  - let cameras_resolution = toShow.cameras_resolution
+  - let cameras_price = toShow.cameras_price
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{camerasid}
+  - let actionid = "/resource/cameras/" + camerasid
+  form(id='camerasForm', action= actionid, method="PUT")
+    div.form-group
+      label.camerasAttr(for='cameras_type') cameras type 
+      input#cameras_type(type='text', name='cameras_type', value= cameras_type )
+    div.form-group
+      label.camerasAttr(for='cameras_resolution') cameras resolution
+      input#cameras_resolution(type='text', name='cameras_resolution', value= cameras_resolution )
+    div.form-group
+      label.camerasAttr(for='cameras_price') cameras price
+      input#cameras_price(type='number', name='cameras_price', value= costumecost )
+    input(type="submit")
+    script.
+      document.forms['camerasForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Update succeeded")
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Update failed " + error )
+        });
+      });
