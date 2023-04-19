@@ -19,7 +19,7 @@ block content
       input#cameras_resolution(type='text', name='cameras_resolution', value= cameras_resolution )
     div.form-group
       label.camerasAttr(for='cameras_price') cameras price
-      input#cameras_price(type='number', name='cameras_price', value= costumecost )
+      input#cameras_price(type='number', name='cameras_price', value= cameras_price )
     input(type="submit")
     script.
       document.forms['camerasForm'].addEventListener('submit', (event) => {
@@ -31,7 +31,7 @@ block content
         }).then((resp) => {
           return resp.json(); // or resp.text() or whatever the server sends
         }).then((body) => {
-          alert("Update succeeded")
+          alert("Update succeded")
           // TODO handle body
         }).catch((error) => {
           // TODO handle error
