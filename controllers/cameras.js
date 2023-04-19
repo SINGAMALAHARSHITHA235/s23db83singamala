@@ -97,4 +97,42 @@ exports.cameras_view_one_Page = async function(req, res) {
         res.send(`{'error': '${err}'}`); 
     } 
 }; 
+// Handle building the view for creating a cameras.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.cameras_create_Page = function(req, res) {
+console.log("create view")
+try{
+res.render('camerascreate', { title: 'cameras Create'});
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+//Handle building the view for updating a cameras.
+// query provides the id
+exports.cameras_update_Page = async function(req, res) {
+console.log("update view for item "+req.query.id)
+try{
+let result = await cameras.findById(req.query.id)
+res.render('camerasupdate', { title: 'cameras Update', toShow: result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
+}
+};
+// Handle a delete one view with id from query
+exports.cameras_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+   let result = await cameras.findById(req.query.id)
+    res.render('camerasdelete', { title: 'cameras Delete', toShow: result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };
     

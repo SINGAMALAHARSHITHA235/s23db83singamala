@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+  form(id='camerasForm', action="/resource/cameras", method="POST")
+    div.form-group
+      label.camerasAttr(for='cameras_type') cameras type
+      input#cameras_type(type='text', name='cameras_type')
+    div.form-group
+      label.camerasAttr(for='resolution') cameras resolution 
+      input#cameras_resolution(type='text', name='resolution')
+    div.form-group
+      label.camerasAttr(for='price') cameras price
+      input#cameras_price(type='number', name='price')
+    input(type="submit")
+  script.
+    document.forms.camerasForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new FormData(event.target)
+      }).then(() => {
+        // TODO do something here after form submission succeeds
+        alert('Form submission succeeded');
+      }).catch((error) => {
+        // show a pop-up message for form submission errors
+        alert('Form submission failed: ' + error)
+      });
+    });

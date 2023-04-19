@@ -17,4 +17,5 @@ router.put('/cameras/:id', cameras_controller.cameras_update_put);
 router.get('/cameras/:id', cameras_controller.cameras_detail);
 // GET request for list of all cameras items.
 router.get('/cameras', cameras_controller.cameras_list);
+
 module.exports = router;
