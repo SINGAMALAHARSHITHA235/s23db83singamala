@@ -42,7 +42,7 @@ exports.cameras_delete = async function(req, res) {
     };
     
 // Handle cameras update form on PUT.
-exports.cameras_update_Page = async function(req, res) { 
+exports.cameras_update_Put = async function(req, res) { 
     console.log(`update on id ${req.params.id} with body 
 ${JSON.stringify(req.body)}`) 
     try { 
@@ -111,18 +111,5 @@ res.send(`{'error': '${err}'}`);
 }
 };
 
-// Handle building the view for updating a cameras. 
-// query provides the id 
-exports.cameras_update_Page =  async function(req, res) { 
-    console.log("update view for item "+req.query.id) 
-    try{ 
-        let result = await cameras.findById(req.query.id) 
-        res.render('camerasupdate', { title: 'cameras Update', toShow: result }); 
-    } 
-    catch(err){ 
-        res.status(500) 
-        res.send(`{'error': '${err}'}`); 
-    } 
-}; 
 
-    
+// code for Screenshot8
