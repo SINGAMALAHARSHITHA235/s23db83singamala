@@ -23,8 +23,11 @@ router.get('/detail',cameras_controllers.cameras_view_one_Page);
 /* GET create cameras page */
 router.get('/create', cameras_controllers.cameras_create_Page);
 
-/* GET create update page */
-router.get('/update', cameras_controllers.cameras_update_put);
+/* GET create update page */ 
+router.get('/update',cameras_controllers.cameras_update_Page);
+
+/* GET delete cameras page */
+//router.get('/delete', cameras_controllers.cameras_delete_page);
 
 // GET request for one cameras.
 router.get('/cameras/:id', cameras_controllers.cameras_detail);
