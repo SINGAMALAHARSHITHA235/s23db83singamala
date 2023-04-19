@@ -24,12 +24,9 @@ router.get('/detail',cameras_controllers.cameras_view_one_Page);
 router.get('/create', cameras_controllers.cameras_create_Page);
 
 /* GET create update page */
-router.get('/update', cameras_controllers.cameras_update_Page);
-
-/* GET delete cameras page */
-router.get('/delete', cameras_controllers.cameras_delete_Page);
-
+router.get('/update', cameras_controllers.cameras_update_put);
 
 // GET request for one cameras.
 router.get('/cameras/:id', cameras_controllers.cameras_detail);
 module.exports = router;
+
