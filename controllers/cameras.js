@@ -66,7 +66,7 @@ failed`);
 exports.cameras_view_all_Page = async function(req, res) {
     try{
         result = await cameras.find();
-    res.render('cameras', { title: 'cameras Search Results', results: result });
+    res.render('cameras', { title: 'cameras Search result', result: result });
     }
     catch(err){
     res.status(500);
@@ -110,6 +110,7 @@ res.status(500)
 res.send(`{'error': '${err}'}`);
 }
 };
+
 // Handle building the view for updating a cameras. 
 // query provides the id 
 exports.cameras_update_Page =  async function(req, res) { 
@@ -123,3 +124,5 @@ exports.cameras_update_Page =  async function(req, res) {
         res.send(`{'error': '${err}'}`); 
     } 
 }; 
+
+    
