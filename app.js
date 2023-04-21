@@ -42,22 +42,6 @@ app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-     Account.findOne({ username: username }, function (err, user) {
-       if (err) { return done(err); }
-       if (!user) {
-         return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
-  }
-));
-
-
 require('dotenv').config();
 const connectionString =
 process.env.MONGO_CON
@@ -88,6 +72,28 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once("open", function(){
 console.log("Connection to DB succeeded")});
+// passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/account');
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+     Account.findOne({ username: username }, function (err, user) {
+       if (err) { return done(err); }
+       if (!user) {
+         return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
 // We can seed the collection if needed on server start
 async function recreateDB(){
 // Delete everything
