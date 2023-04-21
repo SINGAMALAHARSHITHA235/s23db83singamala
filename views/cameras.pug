@@ -3,11 +3,13 @@ extends layout
 block content
   h1= title
   - let items = result;
-  div(class="row")
+  div(class="container-fluid")
+  div(class="row m-1")
     each value,index in items
-      div(class="col-sm-2", onclick=`buy(${index})`) #{value.cameras_type}, #{value.cameras_resolution}, #{value.cameras_price}
+       - let destination = `dispatch(\"/cameras/update?id=${result._id}\")`
+       div(class="col-sm-2", onclick=`buy(${index})`) #{value.cameras_type}, #{value.cameras_resolution}, #{value.cameras_price}
+       button.btn( class="btn-primary ml-1", onclick= destination) Update
   script.
-    function buy(param)
-    {
-      console.log(param);
+    function dispatch(path){
+    window.location.href=path
     }
