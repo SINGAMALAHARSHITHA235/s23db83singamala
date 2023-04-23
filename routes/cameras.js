@@ -12,13 +12,25 @@ var express = require('express');
 const cameras_controllers= require('../controllers/cameras');
 var router = express.Router();
 
+// A little function to check if we have an authorized user and continue on
+// or redirect to login.
+const secured = (req, res, next) => {
+    if (req.user) {
+      return next();
+    }
+    req.session.returnTo = req.originalUrl;
+    res.redirect("/login");
+  }
+
+  
+
 
 
 /* GET cameras */
-router.get('/',cameras_controllers.cameras_view_all_Page );
+router.get('/', cameras_controllers.cameras_view_all_Page );
 
 /* GET detail cameras page */ 
-router.get('/detail',cameras_controllers.cameras_view_one_Page); 
+router.get('/detail', cameras_controllers.cameras_view_one_Page); 
 
 /* GET create cameras page */
 router.get('/create', cameras_controllers.cameras_create_Page);

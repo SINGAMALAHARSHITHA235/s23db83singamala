@@ -12,7 +12,7 @@ router.post('/cameras', cameras_controller.cameras_create_post);
 // DELETE request to delete cameras.
 router.delete('/cameras/:id', cameras_controller.cameras_delete);
 // PUT request to update cameras.
-router.put('/cameras/:id', cameras_controller.cameras_update_Put);
+router.put('/cameras/:id', cameras_controller.cameras_update_Page);
 // GET request for one cameras.
 router.get('/cameras/:id', cameras_controller.cameras_detail);
 // GET request for list of all cameras items.
