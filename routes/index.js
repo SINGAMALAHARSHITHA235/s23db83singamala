@@ -1,58 +1,71 @@
-const express = require('express');
-const passport = require('passport');
-const router = express.Router();
-const Account = require('../models/account');
+var express = require('express');
+var passport = require('passport');
+var router = express.Router();
+var Account = require('../models/account');
 
-router.get('/', (req, res) => {
-  res.render('index', { title: 'cameras App', user: req.user });
+router.get('/', function (req, res) {
+  res.render('index', { title: 'cameras App', user : req.user });
 });
 
-router.get('/register', (req, res) => {
-  res.render('register', { title: 'cameras App Registration' });
+router.get('/register', function(req, res) {
+  res.render('register', { title: 'cameras App Registration'});
 });
 
-router.post('/register', (req, res) => {
-  Account.findOne({ username: req.body.username }, (err, user) => {
-    if (err) {
-      return res.render('register', { title: 'Registration', message: 'Registration error', account: req.body.username })
-    }
-    if (user) {
-      return res.render('register', { title: 'Registration', message: 'Existing User', account: req.body.username })
-    }
-    const newAccount = new Account({ username: req.body.username });
-    Account.register(newAccount, req.body.password, (err, user) => {
-      if (err) {
-        return res.render('register', { title: 'Registration', message: 'access error', account: req.body.username })
+router.post('/register', function(req, res) {
+  Account.findOne({ username : req.body.username })
+    .then(function (user){
+      if(user != null ){
+        console.log("exists " + req.body.username)
+        return res.render('register', { title: 'Registration',
+          message: 'Existing User', account : req.body.username })
       }
-      if (!user) {
-        return res.render('register', { title: 'Registration', message: 'access error', account: req.body.username })
-      }
+      let newAccount = new Account({ username : req.body.username });
+      Account.register(newAccount, req.body.password, function(err, user){
+        if (err) {
+          console.log("db creation issue "+ err)
+          return res.render('register', { title: 'Registration',
+            message: 'access error', account : req.body.username })
+        }
+        if(!user){
+          return res.render('register',{ title: 'Registration',
+            message: 'access error', account : req.body.username })
+        }
+      })
       console.log('Success, redirect');
       res.redirect('/');
     })
-  })
+    .catch(function (err){
+      return res.render('register', { title: 'Registration',
+        message: 'Registration error', account : req.body.username })
+    })
 });
 
-router.get('/login', (req, res) => {
-  res.render('login', { title: 'cameras App Login', user: req.user });
+router.get('/login', function(req, res) {
+  res.render('login', { title: 'cameras App Login', user : req.user });
 });
 
-router.post('/login', passport.authenticate('local'), (req, res) => {
-  if(req.session.returnTo)
-   res.redirect(req.session.returnTo);
+router.post('/login', passport.authenticate('local'), function(req, res) {
+  if(req.session.toReturn){
+    console.log("Send it back to " + req.session.toReturn)
+    res.redirect(req.session.toReturn);
+  }
   res.redirect('/');
 });
 
-router.get('/logout', (req, res, next) => { // use post or delete for better safety
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
+router.get('/logout', function(req, res) {
+  req.logout(function(err) {
+    if (err) { return next(err); }
     res.redirect('/');
   });
 });
 
-router.get('/ping', (req, res) => {
+router.get('/ping', function(req, res){
+  res.status(200).send("pong!");
+});
+
+module.exports = router;
+
+router.get('/ping', function(req, res){
   res.status(200).send("pong!");
 });
 
